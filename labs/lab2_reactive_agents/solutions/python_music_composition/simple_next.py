@@ -1,30 +1,34 @@
+   
 import sys
 import time
-import numpy as np
 
-    
+
 from classes import Agent, Composition, ID_START
 
-class Gingerbread(Composition):
-    def __init__(self, BPM=60):
+class Simple_Next(Composition):
+    def __init__(self, BPM=120):
         Composition.__init__(self,BPM=BPM)
-        self.min=-3
-        self.max=8
-        self.range=self.max-self.min 
-        # your code here
-
-    def map(self, value_in, min_out, max_out):
-        value_out = (value_in-self.min)/(self.range)
-        value_out = min_out+ value_out * (max_out-min_out)
-        return np.clip(value_out, min_out, max_out)
-
+            
     def next(self):
-        # your code here
-        pass
-    
+        #pass
+        #your code here
+        if self.id == -1:
+            self.midinote = 60
+            self.dur = 1
+            self.amp = 1
+            self.id = 0
+        elif self.id == 0:
+            self.midinote += 1
+            if self.midinote == 84:
+                self.id = 1
+        elif self.id == 1:
+            self.midinote -= 1
+            if self.midinote == 60:
+                self.id = 0
+        
 if __name__=="__main__":
     n_agents=1
-    composer=Gingerbread()
+    composer=Simple_Next()
     agents=[_ for _ in range(n_agents)]
     agents[0] = Agent(57120, "/note_effect", composer)
 
