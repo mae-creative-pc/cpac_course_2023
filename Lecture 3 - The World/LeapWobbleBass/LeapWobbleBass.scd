@@ -31,15 +31,16 @@ NetAddr("127.0.0.1",57120);
 
 
 (
-
 x = Synth(\dubstep);
 
 OSCdef('OSCreceiver',
 	{
 		arg msg;
 		var pan = (msg[1]-0.5)/0.5;
-		var freq = msg[3];
+		var freq = msg[2].abs*1000;
 		var cutoffMolt = msg[1];
+
+		freq.postln;
 		x.set(\freq,freq,\amp,1-msg[2],\pan,pan);
 
 	},
